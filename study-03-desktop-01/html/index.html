@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>eelテスト</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <h2>eelテスト</h2>
+    <form>
+      <label>CSVファイル名</label>
+      <input type="text" id="csv-file-name" />
+      <br />
+
+      <label>検索ワード</label>
+      <input type="text" id="input-message" />
+
+      <input id="search" type="button" value="検索" />
+    </form>
+
+    <textarea id="output-message"></textarea>
+
+    <script type="text/javascript" src="./eel.js"></script>
+    <script>
+      const search = document.getElementById("search");
+
+      search.addEventListener(
+        "click",
+        () => {
+          let text = "";
+          const textbox = document.getElementById("input-message");
+          const inputValue = textbox.value;
+          const csvTextbox = document.getElementById("csv-file-name");
+          const csvName = csvTextbox.value;
+
+          if (inputValue === "") {
+            alert("もう一度入力してください");
+            return;
+          } else {
+            text = inputValue;
+
+            if (text === "") {
+              return;
+            } else {
+              eel.kimetsu_search(text, csvName);
+              eel.expose(view_log_js);
+              function view_log_js(text) {
+                document.getElementById("output-message").innerHTML = text;
+              }
+            }
+          }
+        },
+        false
+      );
+    </script>
+  </body>
+</html>
