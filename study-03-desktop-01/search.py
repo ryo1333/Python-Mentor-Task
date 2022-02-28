@@ -1,12 +1,15 @@
 import pandas as pd
 import eel
+import os
+import sys
 
 # デスクトップアプリ作成課題
+dpath = os.path.dirname(sys.argv[0])
 
 
 def kimetsu_search(word, csv_name):
     # 検索対象取得
-    df = pd.read_csv("source.csv")
+    df = pd.read_csv(f"{dpath}/source.csv")
     source = list(df["name"])
     # 検索
     if word in source:
@@ -22,7 +25,5 @@ def kimetsu_search(word, csv_name):
 
     # CSV書き込み
     df = pd.DataFrame(source, columns=["name"])
-    df.to_csv(f"{csv_name}", encoding="utf_8-sig")
+    df.to_csv(f"{dpath}/{csv_name}.csv", encoding="utf_8-sig")
     print(source)
-
-
