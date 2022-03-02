@@ -42,15 +42,16 @@
               return;
             } else {
               eel.kimetsu_search(text, csvName);
-              eel.expose(view_log_js);
-              function view_log_js(text) {
-                document.getElementById("output-message").innerHTML = text;
-              }
             }
           }
         },
         false
       );
+
+      eel.expose(view_log_js);
+      function view_log_js(text) {
+        document.getElementById("output-message").innerHTML = text;
+      }
     </script>
   </body>
 </html>
