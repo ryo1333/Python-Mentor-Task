@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>eelテスト</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <label>商品コード</label>
+    <input type="text" id="item-code" />
+    <br />
+
+    <label>個数</label>
+    <input type="text" id="item-amount" />
+    <br />
+    <input id="item-code-btn" type="button" value="送信" />
+    <br />
+
+    <label>商品情報</label>
+    <textarea id="item-show"></textarea>
+    <br />
+
+    <label>合計金額</label>
+    <textarea id="output-message"></textarea>
+    <br />
+
+    <label>お支払い</label>
+    <input type="text" id="pay" />
+    <br />
+    <input id="pay-btn" type="button" value="送信" />
+    <br />
+    <br />
+
+    <label>お釣り</label>
+    <textarea id="receipt"></textarea>
+    <br />
+    <br />
+    <br />
+
+    <br />
+    <!-- <input id="return-btn" type="button" value="やり直し" /> -->
+    <br />
+
+    <script type="text/javascript" src="./eel.js"></script>
+    <script>
+      const itemCode = document.getElementById("item-code");
+      const search = document.getElementById("search");
+      const itemShow = document.getElementById("item-show");
+      const codeBox = document.getElementById("input-message");
+      const itemCodeBtn = document.getElementById("item-code-btn");
+      const itemAmount = document.getElementById("item-amount");
+      const payBtn = document.getElementById("pay-btn");
+      const outputMessage = document.getElementById("output-message");
+      const receipt = document.getElementById("receipt");
+      const returnBtn = document.getElementById("return-btn");
+      const itemAmountBtn = document.getElementById("item-amount-btn");
+      let codeValue = "";
+      let amount = 0;
+      let pay_amount = 0;
+
+      itemCodeBtn.addEventListener(
+        "click",
+        () => {
+          codeValue = String(itemCode.value);
+          amount = itemAmount.value;
+          eel.get_code(codeValue, amount);
+        },
+        { once: true }
+      );
+
+      eel.expose(source_data);
+      function source_data(data) {
+        console.log(data);
+        document.getElementById("item-show").innerHTML = data;
+      }
+
+      eel.expose(total_pay_view);
+      function total_pay_view(text) {
+        document.getElementById("output-message").innerHTML = text;
+      }
+
+      payBtn.addEventListener(
+        "click",
+        () => {
+          const pay_amount = Number(pay.value);
+          eel.pay(pay_amount);
+          eel.expose(receipt_view);
+          function receipt_view(text) {
+            document.getElementById("receipt").innerHTML = text;
+          }
+        },
+        false
+      );
+
+      // returnBtn.addEventListener(
+      //   "click",
+      //   () => {
+      //     itemCode.value = "";
+      //     itemAmount.value = "";
+      //     pay.value = "";
+      //     document.getElementById("item-show").innerHTML = "";
+      //     document.getElementById("output-message").innerHTML = "";
+      //     document.getElementById("receipt").innerHTML = "";
+      //   },
+      //   false
+      // );
+    </script>
+  </body>
+</html>
