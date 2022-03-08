@@ -1,6 +1,5 @@
 import requests
 import urllib
-import csv
 import pandas as pd
 
 
@@ -21,23 +20,30 @@ def main():
         "minPrice": 111
     }
 
-    # print(get_api(url, params=params))
-    api = get_api(url, params=params)
-    # print(api["Items"][0]["Item"]["itemName"])
-    for item in api["Items"]:
-        pass
-        # print(item["Item"]["itemName"])
-        # print(f"{item['Item']['itemPrice']}円")
+    get_item_name(url, params)
+    get_minmax_price(params)
+    get_ranking(params)
 
+
+def get_item_name(url, params):
+    api = get_api(url, params=params)
+    print(api["Items"][0]["Item"]["itemName"])
+    for item in api["Items"]:
+        print(item["Item"]["itemName"])
+        print(f"{item['Item']['itemPrice']}円")
+
+
+def get_minmax_price(params):
     product_url = "https://app.rakuten.co.jp/services/api/Product/Search/20170426"
     product_api = get_api(product_url, params=params)
 
     for product in product_api["Products"]:
-        pass
-        # print(f"{product['Product']['productName']}")
-        # print(f"最高値↑ {product['Product']['maxPrice']}円")
-        # print(f"最小値↓ {product['Product']['minPrice']}円")
+        print(f"{product['Product']['productName']}")
+        print(f"最高値↑ {product['Product']['maxPrice']}円")
+        print(f"最小値↓ {product['Product']['minPrice']}円")
 
+
+def get_ranking(params):
     ranking_url = "https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20170628"
     ranking_api = get_api(ranking_url, params=params)
     ranking_list = []
